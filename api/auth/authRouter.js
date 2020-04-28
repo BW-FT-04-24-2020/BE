@@ -7,12 +7,12 @@ const Users = require('../users/usersModel');
 
 router.post('/register', (req, res) => {
     let newUser = req.body;
-    const hash = bcrypt.hashSync(user.password, 10);
-    user.password = hash;
+    const hash = bcrypt.hashSync(newUser.password, 10);
+    newUser.password = hash;
     
     Users.add(newUser)
         .then(user => {
-            res.status(201).json({ success: true, message: `user has successfully registered`, newUser, user });
+            res.status(201).json({ success: true, message: `user has successfully registered`, user });
         })
         .catch(error => {
             res.status(500).json({ success: false, errorMessage: `uable to register the user, please try again later`, error });
