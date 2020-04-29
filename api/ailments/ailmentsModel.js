@@ -10,12 +10,12 @@ module.exports = {
 
 function find() {
     return db('ailments')
-        .select('ailment_id', 'ailment', 'ailment_desc')
+            .select('ailment_id', 'ailment', 'ailment_desc')
 };
 
 function findBy(filter) {
     return db('ailments')
-        .where(filter)
+            .where(filter)
 };
 
 async function add(ailment) {
@@ -25,12 +25,13 @@ async function add(ailment) {
 
 function findById(ailment_id) {
     return db('ailments')
-        .where({ ailment_id })
-        .first()
+            .select('ailment', 'ailment_desc')
+            .where({ ailment_id })
+            .first()
 };
 
 function remove(ailment_id) {
     return db('ailments')
-        .where({ ailment_id })
-        .del()
+            .where({ ailment_id })
+            .del()
 };
