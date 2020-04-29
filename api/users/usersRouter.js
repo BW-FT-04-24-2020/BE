@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
 const Users = require('./usersModel');
+const authorizeUser = require('../auth/authorizationMiddleware');
 
-
-router.get('/', (req, res) => {
+router.get('/', authorizeUser, (req, res) => {
     Users.find()
         .then(users => {
             res.status(200).json({ success: true, users });
