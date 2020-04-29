@@ -1,6 +1,7 @@
 
 exports.up = function(knex) {
-    return knex.schema.createTable('users', tbl => {
+    return knex.schema
+    .createTable('users', tbl => {
         // primary key, id that autoincrements
         tbl.increments('id');
 
@@ -21,9 +22,10 @@ exports.up = function(knex) {
         tbl.boolean('legal_age')
             .defaultTo(false)
             .notNullable()
-    });
+    })
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTableIfExists('users');
+    return knex.schema
+    .dropTableIfExists('users');
 };
