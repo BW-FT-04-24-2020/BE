@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
 const Ailments = require('./ailmentsModel');
-const authorizeUser = require('../auth/authorizationMiddleware');
 
 router.get('/', (req, res) => {
+    console.log(res);
     Ailments.find()
         .then(ailment => {
             res.status(200).json({ success: true, ailment });

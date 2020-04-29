@@ -10,7 +10,7 @@ module.exports = {
 
 function find() {
     return db('ailments')
-        .select('ailment', 'ailment_desc', 'user_id')
+        .select('ailment_id', 'ailment', 'ailment_desc')
 };
 
 function findBy(filter) {
