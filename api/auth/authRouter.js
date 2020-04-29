@@ -45,20 +45,6 @@ router.post('/login', (req, res) => {
         })
 });
 
-// function getToken(username) {
-//     const payload = {
-//         username,
-//         role: "student" 
-//     };
-
-//     const secret = process.env.JWT_SECRET || "is it secret?";
-
-//     const options = {
-//         expiresIn: "1d"
-//     };
-
-//     return jwt.sign(payload, secret, options);
-// }
 
 
 

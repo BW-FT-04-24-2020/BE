@@ -4,7 +4,7 @@ exports.up = function(knex) {
     .createTable('ailments', tbl => {
         tbl.increments('ailment_id');
 
-        tbl.string('ailments', 255)
+        tbl.string('ailment', 255)
             .notNullable()
         
         tbl.string('ailment_desc', 500)
