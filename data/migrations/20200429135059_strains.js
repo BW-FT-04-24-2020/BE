@@ -11,7 +11,7 @@ exports.up = function(knex) {
         tbl.string('strain_type', 255)
             .notNullable()
 
-        tbl.string('string_desc', 500)
+        tbl.string('strain_desc', 500)
     })
     
     .createTable('strain_attributes', tbl => {
