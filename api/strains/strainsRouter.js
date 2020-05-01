@@ -27,33 +27,33 @@ router.get('/:id', (req, res) => {
         })
 });
 
-router.post('/', (req, res) => {
-    const { strain_name, strain_type, strain_desc, effects, flavor} = req.body;
-    const strain = { strain_name, strain_type, strain_desc };
+// router.post('/', (req, res) => {
+//     const { strain_name, strain_type, strain_desc, effects, flavor} = req.body;
+//     const strain = { strain_name, strain_type, strain_desc };
     
-    if (!strain_name || !strain_type) {
-        res.status(400).json({ success: false, errormessage: 'please add name and type of new strain' });
-    } else if ( !effects || !flavor) {
-        res.status(400).json({ success: false, errormessage: 'please add effects and flavors new strain' });
-    } else {
-        let strain_id;
-        Strains.add(strain)
-            .then(strain_idArr => {
-                strain_id = strain_idArr[0];
-                const attribute = {effects, flavor, strain_id};
-                return Strains.addAttribute(attribute)
-                        .then(() => 
-                            Strains.findById(strain_id)
-                            .then(strain => {
-                                res.status(201).json(strain);
-                            })
-                        );
-            })
-            .catch(err => {
-                res.status(500).json({ success: false, errorMessage: `internal issue ${err}` });
-            })
-    }
-})
+//     if (!strain_name || !strain_type) {
+//         res.status(400).json({ success: false, errormessage: 'please add name and type of new strain' });
+//     } else if ( !effects || !flavor) {
+//         res.status(400).json({ success: false, errormessage: 'please add effects and flavors new strain' });
+//     } else {
+//         let strain_id;
+//         Strains.add(strain)
+//             .then(strain_idArr => {
+//                 strain_id = strain_idArr[0];
+//                 const attribute = {effects, flavor, strain_id};
+//                 return Strains.addAttribute(attribute)
+//                         .then(() => 
+//                             Strains.findById(strain_id)
+//                             .then(strain => {
+//                                 res.status(201).json(strain);
+//                             })
+//                         );
+//             })
+//             .catch(err => {
+//                 res.status(500).json({ success: false, errorMessage: `internal issue ${err}` });
+//             })
+//     }
+// })
 
 // router.delete('/:id', (req, res) => {
 //     const { id } = req.params
@@ -70,5 +70,57 @@ router.post('/', (req, res) => {
 //         .json({ error: 'failed to delete strain from db'})
 //         })
 // })
+
+router.post("/", (req, res) => {
+    console.log(req.body);
+
+    const { strain_name, strain_type, strain_desc } = req.body;
+    const strain = { strain_name, strain_type, strain_desc };
+    const { effects, flavor } = req.body;
+
+    if (!strain_name || !strain_type) {
+        res.status(400).json({ success: false, message: "please add name and type of new strain" });
+    } else if (!effects || !flavor) {
+        res
+        .status(400)
+        .json({ success: false, message: "please add effects and flavors new strain" });
+    } else {
+        let strain_id;
+        Strains
+            .add(strain)
+            .then(strain_idArr => {
+                strain_id = strain_idArr[0];
+                const attribute = { effects, flavor, strain_id };
+                return Strains.addAttr(attribute);
+            })
+            .then(() => Strains.findById(strain_id))
+            .then(strain => {
+                res.status(201).json({ success: true, strain });
+            })
+            .catch(err =>
+                res.status(500).json({ success: false, error: `internal service issue see: ${err}` })
+            );
+    }
+});
+
+router.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+    Strains
+        .remove(id)
+        .then(rem => {
+            if (rem > 0) {
+                res
+                .status(200)
+                .json({ success: true, message: `Strain with id of ${id} has been removed`,id: id });
+            } else {
+            res
+                .status(404)
+                .json({ success: false, errorMessage: `Strain with ${id} could not be found` });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ success: false, errorMessage: "failed to delete strain from db", err });
+        })
+});
 
 module.exports = router;
