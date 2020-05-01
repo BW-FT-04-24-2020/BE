@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const Recommends = require('./recommendsModel');
 
-router.get('/', restricted, (req, res) => {
+router.get('/', (req, res) => {
     Recommends.find()
         .then(recs => {
             res.status(200).json(recs)
@@ -10,7 +10,7 @@ router.get('/', restricted, (req, res) => {
         .catch(err => res.status(500).json({ error: `no strain recommended for that ailment yet, see: ${err}`}))
 });
 
-router.get('/u/:id', restricted, (req, res) => {
+router.get('/u/:id', (req, res) => {
     Recommends.findByAilment(id)
         .then(u_ails => {
             res.status(200).json(u_ails)
@@ -18,7 +18,7 @@ router.get('/u/:id', restricted, (req, res) => {
         .catch(err => res.status(500).json({ error: `no strain recommended for that ailment yet, see: ${err}`}))
 });
 
-router.get('/:id', restricted, (req, res) => {
+router.get('/:id', (req, res) => {
     Recommends.findByStrain(id)
         .then(rec_strain => {
             res.status(200).json(rec_strain)
