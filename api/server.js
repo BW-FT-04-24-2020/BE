@@ -8,6 +8,8 @@ const authorizeUser = require('../api/auth/authorizationMiddleware');
 const authRouter = require('./auth/authRouter');
 const usersRouter = require('./users/usersRouter');
 const ailmentsRouter = require('../api/ailments/ailmentsRouter');
+const strainsRouter = require('../api/strains/strainsRouter');
+const recommendsRouter = require('./recommends/recommendsRouter');
 
 const server = express();
 
@@ -22,5 +24,7 @@ server.get('/', (req, res) => {
 server.use('/api/auth', authRouter);
 server.use('/api/users', authorizeUser, usersRouter);
 server.use('/api/ailments', authorizeUser, ailmentsRouter);
+server.use('/api/strains', authorizeUser, strainsRouter);
+server.use('/api/recommends',authorizeUser, recommendsRouter);
 
 module.exports = server;

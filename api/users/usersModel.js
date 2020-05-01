@@ -4,13 +4,15 @@ module.exports = {
     add,
     find,
     findBy,
-    findById
+    findById,
+    update,
+    remove
 };
 
 function find() {
     return db('users')
-            .join('ailments', 'id', '=', 'user_id')
-            .select('id', 'username', 'password', 'ailment')
+            //.join('ailments', 'id', '=', 'user_id')
+            .select('id', 'username', 'password')
 };
 
 function findBy(filter) {
@@ -27,4 +29,24 @@ function findById(id) {
     return db('users')
             .where({ id })
             .first()
+};
+
+function update(id, user) {
+    return db('users')
+            .where('id', Number(id))
+            .update(user)
+};
+
+function remove(id) {
+    return db('users')
+            .where('id', Number(id))
+            .del()
+};
+
+function findUserAilment(userId) {
+    return db
+        .select('a.ailment_id', 'a.ailment', 'a.a_desc', 'u.id as userId', 'u.username as user')
+        .from('ailments as a')
+        .join('users as u', 'a.user_id', '=', 'u.id')
+        .where('u.id', '=', userId)
 };

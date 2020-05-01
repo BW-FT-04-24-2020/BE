@@ -12,4 +12,14 @@ router.get('/', (req, res) => {
         })
 });
 
+router.get('/:id/ailments', (req, res) => {
+    Users.findUserAilment(req.params.id)
+        .then(ailment => {
+            res.status(200).json({ success: true, ailment });
+        })
+        .catch(err => {
+            res.status(500).json({ success: false, err });
+        })
+});
+
 module.exports = router;
