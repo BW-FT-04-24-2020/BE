@@ -54,10 +54,10 @@ function findById(s_id) {
 
 function add(strain) {
 return     db('strains')
-     .insert(strain, 'id')  
+            .insert(strain, 'id')  
 }
 
 function addAttr(attribute) {
-  return  db('strain_attributes')
-    .insert(attribute, 'id')
+    return  db('strain_attributes')
+            .insert(attribute, 'id')
 }
