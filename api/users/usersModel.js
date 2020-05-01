@@ -42,3 +42,11 @@ function remove(id) {
             .where('id', Number(id))
             .del()
 };
+
+function findUserAilment(userId) {
+    return db
+        .select('a.ailment_id', 'a.ailment', 'a.a_desc', 'u.id as userId', 'u.username as user')
+        .from('ailments as a')
+        .join('users as u', 'a.user_id', '=', 'u.id')
+        .where('u.id', '=', userId)
+};
